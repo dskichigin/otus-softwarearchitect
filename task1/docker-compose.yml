@@ -1,0 +1,8 @@
+version: '3.3'
+services:
+  dsktask1:
+    image: dsktask1:0.1
+    ports:
+      - 8000:8080
+    networks:
+      - default
