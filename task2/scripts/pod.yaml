@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: task-demo
+  labels:
+    app: task-demo
+spec:
+  containers:
+    - name: task-demo
+      image: task:v1
+      ports:
+        - containerPort: 8000
