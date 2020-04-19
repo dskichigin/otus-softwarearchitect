@@ -1,0 +1,16 @@
+apiVersion: skaffold/v2alpha4
+kind: Config
+metadata:
+  name: configuration
+build:
+  artifacts:
+    - image: userservice
+      context: userservice
+deploy:
+  kubectl:
+    manifests:
+      - postgres.yaml
+      - userservice-config.yaml
+      - deployment.yaml
+      - service.yaml
+      - ingress.yaml
