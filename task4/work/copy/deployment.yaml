@@ -1,0 +1,54 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: userservice-deployment
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: userservice-app
+  template:
+    metadata:
+      labels:
+        app: userservice-app
+    spec:
+      containers:
+        - name: userservice
+          image: dskichigin/otus-softwarearchitect:userservice
+          env:
+            - name: POSTGRES_URI
+              valueFrom:
+                configMapKeyRef:
+                  name: userservice-config
+                  key: POSTGRES_URI
+            - name: POSTGRES_USER
+              valueFrom:
+                secretKeyRef:
+                  name: userservice-secret
+                  key: POSTGRES_USER
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: userservice-secret
+                  key: POSTGRES_PASSWORD
+            - name: GREETING
+              valueFrom:
+                configMapKeyRef:
+                  name: userservice-config
+                  key: GREETING
+          ports:
+            - name: web
+              containerPort: 8000
+          livenessProbe:
+            httpGet:
+              port: 8000
+              path: /version
+            initialDelaySeconds: 10
+            periodSeconds: 5
+            timeoutSeconds: 10
+          readinessProbe:
+            httpGet:
+              port: 8000
+              path: /version
+            initialDelaySeconds: 10
+            periodSeconds: 5

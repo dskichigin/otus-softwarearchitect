@@ -1,0 +1,53 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: userservice
+spec:
+  template:
+    metadata:
+      name: userservice
+    spec:
+      restartPolicy: Never
+      activeDeadlineSeconds: 100
+      containers:
+        - name: post-install-job
+          image: postgres:latest
+          env:
+            - name: PGHOST
+              valueFrom:
+                configMapKeyRef:
+                  name: userservice-config
+                  key: POSTGRES_HOST
+            - name: PGPORT
+              valueFrom:
+                configMapKeyRef:
+                  name: userservice-config
+                  key: POSTGRES_PORT
+            - name: PGUSER
+              valueFrom:
+                secretKeyRef:
+                  name: userservice-secret
+                  key: POSTGRES_USER
+            - name: PGPASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: userservice-secret
+                  key: POSTGRES_PASSWORD
+          command:
+            - sh
+            - "-c"
+            - |
+              psql <<'EOF'
+              CREATE TABLE users
+              (
+                id character(36) NOT NULL,
+                username character varying(200),
+                firstname character varying(500),
+                lastname character varying(500),
+                email character varying(100),
+                phone character varying(100),
+                CONSTRAINT pk_user PRIMARY KEY (id)
+              );
+              EOF
+
+  backoffLimit: 10

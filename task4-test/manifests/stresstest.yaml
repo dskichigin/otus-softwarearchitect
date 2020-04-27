@@ -1,0 +1,35 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: userservice-strestest
+spec:
+  template:
+    metadata:
+      name: userservice
+    spec:
+      restartPolicy: Never
+      containers:
+        - name: task4test
+          image: task4test:v1
+          env:
+            - name: TEST_URI
+              valueFrom:
+                configMapKeyRef:
+                  name: userservice-config
+                  key: TEST_URI
+            - name: TEST_RPS
+              valueFrom:
+                configMapKeyRef:
+                  name: userservice-config
+                  key: TEST_RPS
+            - name: TEST_THREAD
+              valueFrom:
+                configMapKeyRef:
+                  name: userservice-config
+                  key: TEST_THREAD
+            - name: TEST_THREAD_DELAY
+              valueFrom:
+                configMapKeyRef:
+                  name: userservice-config
+                  key: TEST_THREAD_DELAY
+  backoffLimit: 0

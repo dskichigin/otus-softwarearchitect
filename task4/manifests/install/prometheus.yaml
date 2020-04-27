@@ -1,0 +1,13 @@
+prometheus:
+  prometheusSpec:
+    serviceMonitorSelectorNilUsesHelmValues: false
+    serviceMonitorSelector: {}
+
+#scrape_configs:
+#  - job_name: userservice-chart-prometeus-postgresql-exporter
+#    scheme: http
+#    metrics_path: /metrics
+#    static_configs:
+#      - targets: ['userservice-chart-prometheus-postgres-exporter:9187']
+#        labels:
+#          alias: userservice-chart-prometeus-postgresql-exporter

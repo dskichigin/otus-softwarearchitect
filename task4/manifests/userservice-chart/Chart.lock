@@ -1,0 +1,9 @@
+dependencies:
+- name: postgresql
+  repository: https://charts.bitnami.com/bitnami
+  version: 8.9.2
+- name: prometheus-postgres-exporter
+  repository: https://kubernetes-charts.storage.googleapis.com
+  version: 1.3.0
+digest: sha256:c08697452e956e724303a5bf7d23e9ae555587e8d6bccf66b0f3239d18a7e953
+generated: "2020-04-27T13:38:39.744728757+05:00"

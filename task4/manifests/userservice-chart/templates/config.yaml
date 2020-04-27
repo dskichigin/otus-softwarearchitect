@@ -1,0 +1,23 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: userservice-config
+data:
+  POSTGRES_HOST: {{ printf "%s" (include "postgresql.fullname" .) | quote }}
+  POSTGRES_PORT: {{ printf "%s" .Values.postgresql.service.port | quote }}
+  POSTGRES_URI: {{ printf "postgresql://%s:%s/%s" (include "postgresql.fullname" .) .Values.postgresql.service.port .Values.postgresql.postgresqlDatabase | quote }}
+  GREETING: Bonjour
+  TEST_URI: {{ printf "%s:%.0f" (include "userservice-chart.fullname" .) .Values.service.port | quote }}
+  TEST_RPS: {{ printf "%.0f" .Values.stresstest.rps | quote }}
+  TEST_THREAD: {{ printf "%.0f" .Values.stresstest.thread | quote }}
+  TEST_THREAD_DELAY: {{ printf "%.0f" .Values.stresstest.threaddelay | quote }}
+
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: userservice-secret
+type: Opaque
+data:
+  POSTGRES_USER: {{ printf "%s" .Values.postgresql.postgresqlUsername | b64enc | quote }}
+  POSTGRES_PASSWORD: {{ printf "%s" .Values.postgresql.postgresqlPassword | b64enc | quote }}

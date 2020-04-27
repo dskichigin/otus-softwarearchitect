@@ -1,0 +1,13 @@
+
+sum by (method, uri)(rate(http_server_requests_seconds_count{job="userservice-chart"}[1m]))
+histogram_quantile(0.5, (sum by (le, method, uri) (rate(http_server_requests_seconds_bucket{job="userservice-chart"}[1m]))))
+#500
+sum by (method, status, uri)(rate(http_server_requests_seconds_count{job="userservice-chart", status=~"50."}[1m]))
+
+
+sum by (method, uri)(rate(nginx_ingress_controller_request_size_count{exported_service="userservice-chart"}[1m]))
+histogram_quantile(0.5, (sum by (le, method, uri) (rate(nginx_ingress_controller_request_duration_seconds_bucket{exported_service="userservice-chart"}[1m]))))
+histogram_quantile(0.5, (sum by (le) (rate(nginx_ingress_controller_request_duration_seconds_bucket{exported_service="userservice-chart"}[1m]))))
+
+#500
+sum by (method, status)(rate(nginx_ingress_controller_request_size_count{status=~"50."}[1m]))

@@ -1,0 +1,38 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: userservice-strestest
+spec:
+  parallelism: 1
+  completions: null
+  template:
+    metadata:
+      name: userservice
+    spec:
+      restartPolicy: Never
+#      activeDeadlineSeconds: 0
+      containers:
+        - name: userservice-test
+          image: dskichigin/otus-softwarearchitect:userservice-stresstest
+          env:
+            - name: TEST_URI
+              valueFrom:
+                configMapKeyRef:
+                  name: userservice-config
+                  key: TEST_URI
+            - name: TEST_RPS
+              valueFrom:
+                configMapKeyRef:
+                  name: userservice-config
+                  key: TEST_RPS
+            - name: TEST_THREAD
+              valueFrom:
+                configMapKeyRef:
+                  name: userservice-config
+                  key: TEST_THREAD
+            - name: TEST_THREAD_DELAY
+              valueFrom:
+                configMapKeyRef:
+                  name: userservice-config
+                  key: TEST_THREAD_DELAY
+  backoffLimit: 0
