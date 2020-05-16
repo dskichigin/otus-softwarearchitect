@@ -1,0 +1,12 @@
+apiVersion: skaffold/v2beta2
+kind: Config
+build:
+  tagPolicy:
+    sha256: {}
+deploy:
+  helm:
+    releases:
+    - name: userservice-chart
+      chartPath: userservice-chart/.
+    - name: application-chart
+      chartPath: application-chart/.
