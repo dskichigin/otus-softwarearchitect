@@ -1,0 +1,217 @@
+{
+	"info": {
+		"_postman_id": "55b5d254-5f4d-4ba7-9e3f-3ad9f81defee",
+		"name": "product service test",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "создание товара",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "69cbd585-057e-4b91-8f51-0431554ef581",
+						"exec": [
+							"var responseJSON = JSON.parse(responseBody)",
+							"pm.collectionVariables.set(\"productId\", responseJSON[\"id\"])"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "7d2860a0-ae48-44f0-bdfb-40aa71ad5f2a",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"name\":\"prodyct name\",\n \"color\":\"product color\",\n \"category\":\"product category\",\n \"price\":100.0,\n \"description\":\"product description\"}\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://{{baseUrl}}/products",
+					"protocol": "http",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"products"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "получить данные о товаре",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://{{baseUrl}}/products/{{productId}}",
+					"protocol": "http",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"products",
+						"{{productId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "изменить данные о товаре",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "c456fa27-0892-4487-aa7b-7dfb8409bdcc",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"name\":\"product name1\",\n \"color\":\"product color1\",\n \"category\":\"product category1\",\n \"price\":101.0,\n \"description\":\"product description1\"}\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://{{baseUrl}}/products/{{productId}}",
+					"protocol": "http",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"products",
+						"{{productId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "поиск данных о товаре",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "5b1d7aa0-ee22-4cbf-98cc-7ebb2ada42b1",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://{{baseUrl}}/products/filter?filter={{filter}}",
+					"protocol": "http",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"products",
+						"filter"
+					],
+					"query": [
+						{
+							"key": "filter",
+							"value": "{{filter}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "удалить данные о товаре",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://{{baseUrl}}/products/{{productId}}",
+					"protocol": "http",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"products",
+						"{{productId}}"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "536ed827-3da5-403a-9edf-45371e06e51d",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "63985fcc-aa46-4cad-8f68-7ae9c8487ef2",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"id": "fd516806-e846-4542-b24b-1f3ba54bc7f3",
+			"key": "baseUrl",
+			"value": "arch.homework/otusapp",
+			"type": "string"
+		},
+		{
+			"id": "5e131970-7edf-473e-8570-e5ae161467eb",
+			"key": "productId",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"id": "73ed6399-2531-4b12-ada3-1f4a35ea9f85",
+			"key": "filter",
+			"value": "",
+			"type": "string"
+		}
+	],
+	"protocolProfileBehavior": {}
+}
