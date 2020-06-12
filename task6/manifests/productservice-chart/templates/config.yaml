@@ -7,6 +7,7 @@ data:
   POSTGRES_PORT: {{ printf "%s" .Values.postgresql.service.port | quote }}
   POSTGRES_URI: {{ printf "postgresql://%s:%s/%s" (include "postgresql.fullname" .) .Values.postgresql.service.port .Values.postgresql.postgresqlDatabase | quote }}
   GREETING: Bonjour
+  CACHE_ENABLED: {{ printf "%s" .Values.productservice.cache_enable | quote }}
 ---
 apiVersion: v1
 kind: Secret

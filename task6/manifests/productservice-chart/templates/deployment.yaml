@@ -54,6 +54,11 @@ spec:
                 configMapKeyRef:
                   name: productservice-config
                   key: GREETING
+            - name: CACHE_ENABLED
+              valueFrom:
+                configMapKeyRef:
+                  name: productservice-config
+                  key: CACHE_ENABLED
           ports:
             - name: http
               containerPort: 8000

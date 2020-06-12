@@ -11,11 +11,13 @@ public class Task6CacheManagerConfiguration {
     @Bean
     public CacheManager getCacheManager() {
         boolean caching = false;
-        if (System.getenv("CACHE_ENABLED") != null) {
-            if (System.getenv("CACHE_ENABLED").equals("1"))
+        String cache_enable = System.getenv("CACHE_ENABLED");
+        if (cache_enable != null) {
+            if (cache_enable.equals("1") || cache_enable.toLowerCase().equals("true"))
                 caching = true;
         }
         if (caching) {
+            System.out.println("Cache : ON");
             // SimpleCacheManager, ConcurrentMapCacheManager
             // JCacheCacheManager, EhCacheCacheManager, CaffeineCacheManager
             return new EhCacheCacheManager();
@@ -29,6 +31,7 @@ public class Task6CacheManagerConfiguration {
 //            };
         }
 
+        System.out.println("Cache : OFF");
         return new NoOpCacheManager();
     }
 }

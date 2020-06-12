@@ -38,6 +38,9 @@ postgresql:
   service:
     port: "5432"
 
+productservice:
+  cache_enable: "true"
+
 imagePullSecrets: []
 nameOverride: ""
 fullnameOverride: ""
