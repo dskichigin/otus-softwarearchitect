@@ -132,18 +132,18 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://{{baseUrl}}/products/filter?filter={{filter}}",
+					"raw": "http://{{baseUrl}}/products/search?q={{filter}}",
 					"protocol": "http",
 					"host": [
 						"{{baseUrl}}"
 					],
 					"path": [
 						"products",
-						"filter"
+						"search"
 					],
 					"query": [
 						{
-							"key": "filter",
+							"key": "q",
 							"value": "{{filter}}"
 						}
 					]
@@ -195,19 +195,19 @@
 	],
 	"variable": [
 		{
-			"id": "fd516806-e846-4542-b24b-1f3ba54bc7f3",
+			"id": "16fe959b-fb92-4d35-803e-2607a627cb39",
 			"key": "baseUrl",
 			"value": "arch.homework/otusapp",
 			"type": "string"
 		},
 		{
-			"id": "5e131970-7edf-473e-8570-e5ae161467eb",
+			"id": "191fa119-c942-4987-8bd2-3a8bb5b5b108",
 			"key": "productId",
 			"value": "",
 			"type": "string"
 		},
 		{
-			"id": "73ed6399-2531-4b12-ada3-1f4a35ea9f85",
+			"id": "4444531b-faeb-46c8-bcf1-c550afae79fe",
 			"key": "filter",
 			"value": "",
 			"type": "string"

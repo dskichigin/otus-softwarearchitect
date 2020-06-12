@@ -42,9 +42,9 @@ public class ProductController {
         return ResponseEntity.ok(productProxy.getProducts());
     }
 
-    @GetMapping(value = "/products/filter", produces = "application/json")
-    public List<ProductEntity> findProducts(@PathParam("filter") String filter, HttpServletRequest request) {
-        return productProxy.findProductsByFilter(filter);
+    @GetMapping(value = "/products/search", produces = "application/json")
+    public List<ProductEntity> findProducts(@PathParam("q") String q, HttpServletRequest request) {
+        return productProxy.findProductsByFilter(q);
     }
 
 
