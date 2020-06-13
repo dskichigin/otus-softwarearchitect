@@ -1,8 +1,8 @@
-package dsk.otus.softwarearchitect.task6.cache;
+package dsk.otus.softwarearchitect.task7.cache;
 
 import com.github.javafaker.Faker;
-import dsk.otus.softwarearchitect.task6.entity.ProductEntity;
-import dsk.otus.softwarearchitect.task6.repository.ProductRepository;
+import dsk.otus.softwarearchitect.task7.entity.ProductEntity;
+import dsk.otus.softwarearchitect.task7.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.CacheEvict;
@@ -24,7 +24,7 @@ public class ProductProxy {
     @Autowired
     ConfigurableApplicationContext applicationContex;
 
-//    @CachePut(value = "products", key = "#product.id")
+    @CachePut(value = "products", key = "#product.id")
     public ProductEntity createProduct(ProductEntity product) {
         product.setId(productRepository.generateId());
         product.setNew(true);
@@ -34,9 +34,6 @@ public class ProductProxy {
 
     @Cacheable(value = "products", key = "#id")
     public ProductEntity getProduct(Long id) {
-        try {
-            Thread.sleep(200);
-        } catch (Exception e) {}
         Optional<ProductEntity> result = productRepository.findById(id);
         if (result.isPresent()) return result.get();
 

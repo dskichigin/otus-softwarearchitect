@@ -1,6 +1,6 @@
-package dsk.otus.softwarearchitect.task6.repository;
+package dsk.otus.softwarearchitect.task7.repository;
 
-import dsk.otus.softwarearchitect.task6.entity.ProductEntity;
+import dsk.otus.softwarearchitect.task7.entity.ProductEntity;
 import org.springframework.data.jdbc.repository.query.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
@@ -16,5 +16,4 @@ public interface ProductRepository extends CrudRepository<ProductEntity, Long> {
 
     @Query("SELECT setval('seq_products', 1, true)")
     Long clearId();
-
 }

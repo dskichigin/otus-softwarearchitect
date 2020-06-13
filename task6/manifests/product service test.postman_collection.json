@@ -75,31 +75,10 @@
 			"response": []
 		},
 		{
-			"name": "изменить данные о товаре",
-			"event": [
-				{
-					"listen": "prerequest",
-					"script": {
-						"id": "c456fa27-0892-4487-aa7b-7dfb8409bdcc",
-						"exec": [
-							""
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
+			"name": "получить данные о товаре повторное",
 			"request": {
-				"method": "PUT",
+				"method": "GET",
 				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\"name\":\"product name1\",\n \"color\":\"product color1\",\n \"category\":\"product category1\",\n \"price\":101.0,\n \"description\":\"product description1\"}\n",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
 				"url": {
 					"raw": "http://{{baseUrl}}/products/{{productId}}",
 					"protocol": "http",
@@ -109,43 +88,6 @@
 					"path": [
 						"products",
 						"{{productId}}"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "поиск данных о товаре",
-			"event": [
-				{
-					"listen": "prerequest",
-					"script": {
-						"id": "5b1d7aa0-ee22-4cbf-98cc-7ebb2ada42b1",
-						"exec": [
-							""
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "http://{{baseUrl}}/products/search?q={{filter}}",
-					"protocol": "http",
-					"host": [
-						"{{baseUrl}}"
-					],
-					"path": [
-						"products",
-						"search"
-					],
-					"query": [
-						{
-							"key": "q",
-							"value": "{{filter}}"
-						}
 					]
 				}
 			},
@@ -195,19 +137,19 @@
 	],
 	"variable": [
 		{
-			"id": "16fe959b-fb92-4d35-803e-2607a627cb39",
+			"id": "6bfab0a8-1a92-46cd-af2c-8173ae082863",
 			"key": "baseUrl",
 			"value": "arch.homework/otusapp",
 			"type": "string"
 		},
 		{
-			"id": "191fa119-c942-4987-8bd2-3a8bb5b5b108",
+			"id": "bcd13fae-6356-43e0-8789-5b5df2ef88cb",
 			"key": "productId",
 			"value": "",
 			"type": "string"
 		},
 		{
-			"id": "4444531b-faeb-46c8-bcf1-c550afae79fe",
+			"id": "9ffc2d5b-6e7f-450a-8310-96caf039aaeb",
 			"key": "filter",
 			"value": "",
 			"type": "string"

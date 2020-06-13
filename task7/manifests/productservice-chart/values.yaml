@@ -5,10 +5,10 @@
 replicaCount: 1
 
 image:
-  repository: dskichigin/otus-softwarearchitect
+  repository: task7
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart version.
-  tag: "productservice"
+  tag: "v1"
 
 service:
   type: NodePort
@@ -91,3 +91,19 @@ nodeSelector: {}
 tolerations: []
 
 affinity: {}
+
+metrics:
+  serviceMonitor:
+    enabled: true
+
+prometheus-postgres-exporter:
+  enabled: true
+  serviceMonitor:
+    enabled: true
+  config:
+    datasource:
+      host: productservice-chart-postgresql
+      user: otus
+      password: otus
+      port: "5432"
+      database: ''

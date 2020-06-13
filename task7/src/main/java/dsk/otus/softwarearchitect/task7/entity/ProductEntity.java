@@ -1,4 +1,4 @@
-package dsk.otus.softwarearchitect.task6.entity;
+package dsk.otus.softwarearchitect.task7.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.springframework.data.annotation.Id;
@@ -9,7 +9,7 @@ import org.springframework.data.relational.core.mapping.Table;
 
 @JsonIgnoreProperties(value = { "new" })
 @Table("products")
-public class ProductEntity implements Persistable {
+public class ProductEntity implements Persistable<Long> {
 
     @Id
     @Column("id")
