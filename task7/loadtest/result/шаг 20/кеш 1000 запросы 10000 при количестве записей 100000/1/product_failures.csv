@@ -1,0 +1,6 @@
+"Method","Name","Error","Occurrences"
+"GET","product_search","504 Server Error: Gateway Time-out for url: product_search",5
+"GET","product_search","503 Server Error: Service Temporarily Unavailable for url: product_search",1222
+"GET","product_search","500 Server Error:  for url: product_search",240
+"GET","product_id","503 Server Error: Service Temporarily Unavailable for url: product_id",12177
+"GET","product_id","500 Server Error:  for url: product_id",846

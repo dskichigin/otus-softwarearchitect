@@ -24,7 +24,7 @@ public class ProductProxy {
     @Autowired
     ConfigurableApplicationContext applicationContex;
 
-    @CachePut(value = "products", key = "#product.id")
+//    @CachePut(value = "products", key = "#product.id")
     public ProductEntity createProduct(ProductEntity product) {
         product.setId(productRepository.generateId());
         product.setNew(true);

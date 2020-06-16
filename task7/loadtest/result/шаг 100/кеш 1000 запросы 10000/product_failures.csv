@@ -1,0 +1,10 @@
+"Method","Name","Error","Occurrences"
+"GET","product_search","504 Server Error: Gateway Time-out for url: product_search",5
+"GET","product_search","503 Server Error: Service Temporarily Unavailable for url: product_search",2662
+"GET","product_search","500 Server Error:  for url: product_search",150
+"GET","product_id","503 Server Error: Service Temporarily Unavailable for url: product_id",26523
+"GET","product_id","('Connection broken: IncompleteRead(0 bytes read)', IncompleteRead(0 bytes read))",1
+"GET","product_id","502 Server Error: Bad Gateway for url: product_id",2550
+"GET","product_id","500 Server Error:  for url: product_id",487
+"GET","product_search","502 Server Error: Bad Gateway for url: product_search",282
+"GET","product_id","504 Server Error: Gateway Time-out for url: product_id",43

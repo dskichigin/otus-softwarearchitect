@@ -74,12 +74,18 @@ public class ProductController {
     }
 
     @PostMapping(path = "/products/fill", produces = "application/json")
-    @Counted
+//    @Counted
     public @ResponseBody
     ResponseEntity fillProducts(@PathParam("count") String count, HttpServletRequest request) {
         // заполняем базу
         productProxy.fillProducts(Long.valueOf(count));
         return ResponseEntity.ok().build();
+    }
+    @GetMapping(path = "/products/count", produces = "application/json")
+//    @Counted
+    public @ResponseBody
+    ResponseEntity<Long> fillProductsCount(HttpServletRequest request) {
+        return ResponseEntity.ok(productRepository.countRows());
     }
 
 

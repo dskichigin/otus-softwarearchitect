@@ -16,4 +16,7 @@ public interface ProductRepository extends CrudRepository<ProductEntity, Long> {
 
     @Query("SELECT setval('seq_products', 1, true)")
     Long clearId();
+
+    @Query("SELECT count(id) from products")
+    Long countRows();
 }
