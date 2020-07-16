@@ -1,0 +1,3 @@
+"Method","Name","Error","Occurrences"
+"GET","product_search","503 Server Error: Service Temporarily Unavailable for url: product_search",25
+"GET","product_id","503 Server Error: Service Temporarily Unavailable for url: product_id",228
