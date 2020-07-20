@@ -1,0 +1,14 @@
+apiVersion: skaffold/v2beta2
+kind: Config
+build:
+  tagPolicy:
+    sha256: {}
+deploy:
+  helm:
+    releases:
+    - name: productservice-chart
+      chartPath: productservice-chart/.
+    - name: productservice-postgresql-s0
+      chartPath: productservice-postgresql-s0/.
+    - name: productservice-postgresql-s1
+      chartPath: productservice-postgresql-s1/.

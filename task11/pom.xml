@@ -2,20 +2,14 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-
     <parent>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.2.6.RELEASE</version>
-        <relativePath/> <!-- lookup parent from repository -->
+        <artifactId>parent</artifactId>
+        <groupId>dsk.otus.softwarearchitect</groupId>
+        <version>1.0-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>task7</artifactId>
-    <version>0.1-SNAPSHOT</version>
-    <name>task7</name>
-    <description>Demo project for Spring Boot</description>
-
+    <artifactId>task11</artifactId>
     <properties>
         <java.version>1.8</java.version>
 
@@ -30,7 +24,7 @@
 
 
     <build>
-        <finalName>task7</finalName>
+        <finalName>task11</finalName>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
@@ -55,7 +49,7 @@
                             <goal>copy-dependencies</goal>
                         </goals>
                         <configuration>
-                            <outputDirectory>${project.build.directory}/task7_lib</outputDirectory>
+                            <outputDirectory>${project.build.directory}/task11_lib</outputDirectory>
                             <overWriteReleases>false</overWriteReleases>
                             <overWriteSnapshots>false</overWriteSnapshots>
                             <overWriteIfNewer>true</overWriteIfNewer>
@@ -71,8 +65,8 @@
                     <archive>
                         <manifest>
                             <addClasspath>true</addClasspath>
-                            <classpathPrefix>test7_lib/</classpathPrefix>
-                            <mainClass>dsk.otus.softwarearchitect.Task7Application</mainClass>
+                            <classpathPrefix>test11_lib/</classpathPrefix>
+                            <mainClass>dsk.otus.softwarearchitect.task11.Task11Application</mainClass>
                         </manifest>
                         <manifestEntries>
                             <Version>${project.version}</Version>

@@ -1,0 +1,24 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: productservice-config
+data:
+  POSTGRES_HOST: {{ printf "%s" (include "postgresql.fullname.0" .) | quote }}
+  POSTGRES_PORT: {{ printf "%s" .Values.postgresql.service.port | quote }}
+  POSTGRES_URI: {{ printf "postgresql://%s:%s/%s" (include "postgresql.fullname.0" .) .Values.postgresql.service.port .Values.postgresql.postgresqlDatabase | quote }}
+  POSTGRES_HOST_1: {{ printf "%s" (include "postgresql.fullname.0" .) | quote }}
+  POSTGRES_PORT_1: {{ printf "%s" .Values.postgresql.service.port | quote }}
+  POSTGRES_URI_1: {{ printf "postgresql://%s:%s/%s" (include "postgresql.fullname.0" .) .Values.postgresql.service.port .Values.postgresql.postgresqlDatabase | quote }}
+  GREETING: Bonjour
+  CACHE_ENABLED: {{ printf "%s" .Values.productservice.cache_enable | quote }}
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: productservice-secret
+type: Opaque
+data:
+  POSTGRES_USER: {{ printf "%s" .Values.postgresql.postgresqlUsername | b64enc | quote }}
+  POSTGRES_PASSWORD: {{ printf "%s" .Values.postgresql.postgresqlPassword | b64enc | quote }}
+  POSTGRES_USER_1: {{ printf "%s" .Values.postgresql.postgresqlUsername | b64enc | quote }}
+  POSTGRES_PASSWORD_1: {{ printf "%s" .Values.postgresql.postgresqlPassword | b64enc | quote }}

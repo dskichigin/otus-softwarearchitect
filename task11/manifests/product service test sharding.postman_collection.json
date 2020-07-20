@@ -1,0 +1,138 @@
+{
+	"info": {
+		"_postman_id": "362028c4-bcd1-4920-b7f7-f5fc13d86b73",
+		"name": "product service test sharding",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "создание товара",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "806a9fa8-da99-4034-b386-b600aedecdc7",
+						"exec": [
+							"var responseJSON = JSON.parse(responseBody)",
+							"pm.collectionVariables.set(\"productGuid\", responseJSON[\"guid\"])"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "a5871ac7-f33a-41a4-a574-23764c8bcad3",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"guid\":\"{{$randomUUID}}\",\n \"name\":\"prodyct name\",\n \"color\":\"product color\",\n \"category\":\"product category\",\n \"price\":100.0,\n \"description\":\"product description\"}\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://{{baseUrl}}/products",
+					"protocol": "http",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"products"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "получить данные о товаре",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://{{baseUrl}}/products/{{productId}}",
+					"protocol": "http",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"products",
+						"{{productId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "получить данные о товаре шарде",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://{{baseUrl}}/products/shard/{{producGuid}}",
+					"protocol": "http",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"products",
+						"shard",
+						"{{producGuid}}"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "477c2504-e6f9-42b7-8a36-db322569c66d",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "a9bb419d-e53b-47cd-88a2-9e9ed100e462",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"id": "0fb552d0-8780-469b-92e7-4498aadf2552",
+			"key": "baseUrl",
+			"value": "arch.homework/otusapp"
+		},
+		{
+			"id": "37fbec88-2285-4edf-9af0-35a91cdd562c",
+			"key": "productGuid",
+			"value": ""
+		},
+		{
+			"id": "95be0fd9-72b2-4726-b52a-d1688cdf6acb",
+			"key": "filter",
+			"value": ""
+		}
+	],
+	"protocolProfileBehavior": {}
+}

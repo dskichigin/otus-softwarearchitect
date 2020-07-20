@@ -1,0 +1,93 @@
+{
+	"info": {
+		"_postman_id": "f187e7e0-0782-49ef-9caa-34061f4bf473",
+		"name": "product service test sharding auto fill",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "заполнить данные о товарах",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://{{baseUrl}}/products/fill?count=100000",
+					"protocol": "http",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"products",
+						"fill"
+					],
+					"query": [
+						{
+							"key": "count",
+							"value": "100000"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "запросить количество записей в базе",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://{{baseUrl}}/products/count",
+					"protocol": "http",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"products",
+						"count"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "cd39d3b0-521e-4567-83d4-68d15ceadb59",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "d1decc74-b3a7-46be-97d3-6a62cc7eaee9",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"id": "1b6c37f3-9aae-4fc6-86cb-92de21a5cb4c",
+			"key": "baseUrl",
+			"value": "arch.homework/otusapp"
+		},
+		{
+			"id": "a86afcc4-9c52-4b24-bbb7-7138c0746549",
+			"key": "productGuid",
+			"value": ""
+		},
+		{
+			"id": "c66a4039-8fbf-4d62-9943-0112733f2bb5",
+			"key": "filter",
+			"value": ""
+		}
+	],
+	"protocolProfileBehavior": {}
+}
