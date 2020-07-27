@@ -19,7 +19,6 @@
         <module>task2</module>
         <module>task3</module>
         <module>task4</module>
-        <module>task4</module>
         <module>task4-test</module>
         <module>task5</module>
         <module>task5-app</module>
@@ -28,7 +27,9 @@
         <module>task8</module>
         <module>task9</module>
         <module>task10</module>
+        <module>task10-common</module>
         <module>task10-order</module>
+        <module>task10-delivery</module>
         <module>task10-payment</module>
         <module>task10-warehouse</module>
         <module>task11</module>

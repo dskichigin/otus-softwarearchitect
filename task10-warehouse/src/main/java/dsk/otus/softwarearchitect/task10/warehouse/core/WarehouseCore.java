@@ -1,9 +1,8 @@
 package dsk.otus.softwarearchitect.task10.warehouse.core;
 
-import com.sun.org.apache.bcel.internal.generic.RETURN;
 import dsk.otus.softwarearchitect.task10.warehouse.entity.OperationEntity;
-import dsk.otus.softwarearchitect.task10.warehouse.object.TypeOperation;
 import dsk.otus.softwarearchitect.task10.warehouse.entity.WarehouseEntity;
+import dsk.otus.softwarearchitect.task10.warehouse.object.TypeOperation;
 import dsk.otus.softwarearchitect.task10.warehouse.repository.WatehouseRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;

@@ -1,0 +1,523 @@
+{
+	"info": {
+		"_postman_id": "55ce041f-8594-4371-8c90-e6ed06b63aaa",
+		"name": "Saga",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "оприходование товара",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "0781b83b-633f-4258-be40-4d5c8d2c02f2",
+						"exec": [
+							"var responseJSON = JSON.parse(responseBody)",
+							"pm.collectionVariables.set(\"productId\", responseJSON[\"productId\"])"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"orderId\":\"\",\n \"productId\":\"{{$randomUUID}}\",\n \"col\":2}\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://{{baseUrl}}/warehouses/arrival",
+					"protocol": "http",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"warehouses",
+						"arrival"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "инициализируем временные слоты",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "61d5e969-fdb3-4fe1-b22e-7b1c546b369f",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://{{baseUrl}}/delivery/slots/init",
+					"protocol": "http",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"delivery",
+						"slots",
+						"init"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "оформить заказ",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "434cf89a-cf40-47da-9875-b150d167dff9",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "ea9828ba-b23f-4b36-88a4-a3187ae3c2f4",
+						"exec": [
+							"uuid = require('uuid');",
+							"pm.collectionVariables.set(\"orderId\", uuid.v4());",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"id\":\"{{orderId}}\",\n \"productId\":\"{{productId}}\",\n \"deliveryTimeFrom\":\"10:00\",\n \"deliveryTimeTo\":\"11:00\",\n \"col\":1,\n \"summa\":100}\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://{{baseUrl}}/orders",
+					"protocol": "http",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"orders"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "информция о платеже",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://{{baseUrl}}/payments?order_id={{orderId}}",
+					"protocol": "http",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"payments"
+					],
+					"query": [
+						{
+							"key": "order_id",
+							"value": "{{orderId}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "информция со склада",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://{{baseUrl}}/warehouses?order_id={{orderId}}",
+					"protocol": "http",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"warehouses"
+					],
+					"query": [
+						{
+							"key": "order_id",
+							"value": "{{orderId}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "информция о доставке",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://{{baseUrl}}/delivery/slots?order_id={{orderId}}",
+					"protocol": "http",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"delivery",
+						"slots"
+					],
+					"query": [
+						{
+							"key": "order_id",
+							"value": "{{orderId}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "оформить заказ (на тот же товар)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "d088638d-7daa-4f56-9934-ba71808ab9fb",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "952eac37-14ef-4e2d-aaf7-6c7ea1d32e27",
+						"exec": [
+							"uuid = require('uuid');",
+							"pm.collectionVariables.set(\"orderId\", uuid.v4());",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"id\":\"{{orderId}}\",\n \"productId\":\"{{productId}}\",\n \"deliveryTimeFrom\":\"10:00\",\n \"deliveryTimeTo\":\"11:00\",\n \"col\":10,\n \"summa\":1000}\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://{{baseUrl}}/orders",
+					"protocol": "http",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"orders"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "информция о платеже",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://{{baseUrl}}/payments?order_id={{orderId}}",
+					"protocol": "http",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"payments"
+					],
+					"query": [
+						{
+							"key": "order_id",
+							"value": "{{orderId}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "информция со склада",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://{{baseUrl}}/warehouses?order_id={{orderId}}",
+					"protocol": "http",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"warehouses"
+					],
+					"query": [
+						{
+							"key": "order_id",
+							"value": "{{orderId}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "информция о доставке",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://{{baseUrl}}/delivery/slots?order_id={{orderId}}",
+					"protocol": "http",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"delivery",
+						"slots"
+					],
+					"query": [
+						{
+							"key": "order_id",
+							"value": "{{orderId}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "оформить заказ (на то же время)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "ecbde12e-ea4a-4046-bbf9-f8ca87efa964",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "b14f939b-ca00-40ec-9031-700779313cd3",
+						"exec": [
+							"uuid = require('uuid');",
+							"pm.collectionVariables.set(\"orderId\", uuid.v4());",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"id\":\"{{orderId}}\",\n \"productId\":\"{{productId}}\",\n \"deliveryTimeFrom\":\"10:00\",\n \"deliveryTimeTo\":\"11:00\",\n \"col\":1,\n \"summa\":100}\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://{{baseUrl}}/orders",
+					"protocol": "http",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"orders"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "информция о платеже",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://{{baseUrl}}/payments?order_id={{orderId}}",
+					"protocol": "http",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"payments"
+					],
+					"query": [
+						{
+							"key": "order_id",
+							"value": "{{orderId}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "информция со склада",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://{{baseUrl}}/warehouses?order_id={{orderId}}",
+					"protocol": "http",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"warehouses"
+					],
+					"query": [
+						{
+							"key": "order_id",
+							"value": "{{orderId}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "информция о доставке",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://{{baseUrl}}/delivery/slots?order_id={{orderId}}",
+					"protocol": "http",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"delivery",
+						"slots"
+					],
+					"query": [
+						{
+							"key": "order_id",
+							"value": "{{orderId}}"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "240f2ade-3ded-4df0-b481-f22732c8c388",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "81077ff8-d0db-49a2-8f67-6cff26d79895",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"id": "e3665d52-9e76-47c4-b7b9-a0dc92296827",
+			"key": "baseUrl_warehouse",
+			"value": "127.0.0.1:8002"
+		},
+		{
+			"id": "171141c1-42a3-4d59-8079-d665fa2ae82f",
+			"key": "baseUrl_delivery",
+			"value": "127.0.0.1:8003"
+		},
+		{
+			"id": "e7eff616-9386-4d56-b6dd-256f03652009",
+			"key": "baseUrl_order",
+			"value": "127.0.0.1:8000"
+		},
+		{
+			"id": "eaf2bcbc-ac91-4250-a3a4-3ebf1d8d60cc",
+			"key": "productId",
+			"value": ""
+		},
+		{
+			"id": "1699dd27-bddf-445f-a13a-29b28d2dd9d2",
+			"key": "orderId",
+			"value": ""
+		},
+		{
+			"id": "262ebe80-eff6-4c2d-a241-cf6074be58e1",
+			"key": "baseUrl_payment",
+			"value": "127.0.0.1:8001"
+		},
+		{
+			"id": "ca8847dc-e308-48a3-b981-2a39e649b039",
+			"key": "baseUrl",
+			"value": "arch.homework/otusapp"
+		}
+	],
+	"protocolProfileBehavior": {}
+}

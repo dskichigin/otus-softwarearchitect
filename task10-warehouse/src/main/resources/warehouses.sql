@@ -6,5 +6,5 @@ CREATE TABLE warehouses
   col numeric,
   type character varying(50),
   active integer,
-  CONSTRAINT pk_warehouse PRIMARY KEY (id)
+  CONSTRAINT pk_warehouses PRIMARY KEY (id)
 )

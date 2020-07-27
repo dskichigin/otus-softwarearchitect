@@ -1,0 +1,50 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: paymentservice
+spec:
+  template:
+    metadata:
+      name: paymentservice
+    spec:
+      restartPolicy: Never
+      containers:
+        - name: post-install-job
+          image: postgres:latest
+          env:
+            - name: PGHOST
+              valueFrom:
+                configMapKeyRef:
+                  name: paymentservice-config
+                  key: POSTGRES_HOST
+            - name: PGPORT
+              valueFrom:
+                configMapKeyRef:
+                  name: paymentservice-config
+                  key: POSTGRES_PORT
+            - name: PGUSER
+              valueFrom:
+                secretKeyRef:
+                  name: paymentservice-secret
+                  key: POSTGRES_USER
+            - name: PGPASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: paymentservice-secret
+                  key: POSTGRES_PASSWORD
+          command:
+            - sh
+            - "-c"
+            - |
+              psql <<'EOF'
+              CREATE TABLE payments
+              (
+                id character(36) NOT NULL,
+                orderid character(36),
+                summa numeric,
+                status character varying(50),
+                CONSTRAINT pk_payments PRIMARY KEY (id)
+              );
+              EOF
+
+  backoffLimit: 10

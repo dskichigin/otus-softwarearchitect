@@ -7,26 +7,23 @@ import dsk.otus.softwarearchitect.task10.order.repository.OrderRepository;
 import dsk.otus.softwarearchitect.task10.payment.entity.PaymentEntity;
 import dsk.otus.softwarearchitect.task10.warehouse.entity.OperationEntity;
 import dsk.otus.softwarearchitect.task10.warehouse.entity.WarehouseEntity;
-import io.micrometer.core.annotation.Counted;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.*;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.websocket.server.PathParam;
 
 @Component
 public class OrderCore {
     @Autowired
     OrderRepository orderRepository;
 
-    String server_payment="127.0.0.1:8001";
-    String server_warehouse="127.0.0.1:8002";
-    String server_delivery="127.0.0.1:8003";
+    String server_payment="paymentservice:9000";
+    String server_warehouse="warehouseservice:9000";
+    String server_delivery="deliveryservice:9000";
 
     RestTemplate restTemplate = new RestTemplate();
 

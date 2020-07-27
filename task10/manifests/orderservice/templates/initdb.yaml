@@ -1,0 +1,53 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: orderservice
+spec:
+  template:
+    metadata:
+      name: orderservice
+    spec:
+      restartPolicy: Never
+      containers:
+        - name: post-install-job
+          image: postgres:latest
+          env:
+            - name: PGHOST
+              valueFrom:
+                configMapKeyRef:
+                  name: orderservice-config
+                  key: POSTGRES_HOST
+            - name: PGPORT
+              valueFrom:
+                configMapKeyRef:
+                  name: orderservice-config
+                  key: POSTGRES_PORT
+            - name: PGUSER
+              valueFrom:
+                secretKeyRef:
+                  name: orderservice-secret
+                  key: POSTGRES_USER
+            - name: PGPASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: orderservice-secret
+                  key: POSTGRES_PASSWORD
+          command:
+            - sh
+            - "-c"
+            - |
+              psql <<'EOF'
+              CREATE TABLE orders
+              (
+                id character(36) NOT NULL,
+                productid character(36),
+                delivery_time_from character varying(36),
+                delivery_time_to character varying(36),
+                col int,
+                summa numeric,
+                status character varying(50),
+                CONSTRAINT pk_orders PRIMARY KEY (id)
+              );
+              EOF
+
+  backoffLimit: 10

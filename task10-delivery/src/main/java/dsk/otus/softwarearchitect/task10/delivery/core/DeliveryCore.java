@@ -5,8 +5,6 @@ import dsk.otus.softwarearchitect.task10.delivery.repository.SlotRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import javax.websocket.server.PathParam;
-import java.util.List;
 import java.util.Optional;
 
 @Component
@@ -34,7 +32,7 @@ public class DeliveryCore {
         SlotEntity slot = slotRepository.findSlotByTime(timeFrom, timeTo);
         if (slot == null) throw new Exception("Временной слот не найден");
         if (slot.getOrderId() != null)
-            if (slot.getOrderId().equals("")) throw new Exception("Временной слот не найден");
+            if (!slot.getOrderId().equals("")) throw new Exception("Временной слот занят");
 
         slot.setNew(false);
         slot.setOrderId(orderId);

@@ -16,4 +16,7 @@ public interface WatehouseRepository extends CrudRepository<WarehouseEntity, Str
     @Modifying
     void cancelOperationByOrderId(@Param("orderId") String orderId);
 
+    @Query("select * from warehouses where orderId = :orderId")
+    WarehouseEntity getWarehouseByOrderId(@Param("orderId") String orderId);
+
 }

@@ -13,7 +13,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.websocket.server.PathParam;
 
 @RestController
 @Timed(percentiles = {0.5, 0.95, 0.99, 1}, histogram = true)
@@ -51,6 +50,12 @@ public class WarehouseController {
     public @ResponseBody ResponseEntity cancelOperation(@RequestParam("order_id") String orderId, HttpServletRequest request) {
         warehouseCore.cancelOperationByOrderId(orderId);
         return ResponseEntity.ok().build();
+    }
+    @GetMapping(path = "/warehouses", produces = "application/json")
+    @Counted
+    public @ResponseBody
+    ResponseEntity<WarehouseEntity> getStatus(@RequestParam("order_id") String orderId, HttpServletRequest request) {
+        return ResponseEntity.ok(watehouseRepository.getWarehouseByOrderId(orderId));
     }
 
     @GetMapping(path = "/version", produces = "application/json")
