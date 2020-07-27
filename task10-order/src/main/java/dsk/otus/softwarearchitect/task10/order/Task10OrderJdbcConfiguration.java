@@ -1,11 +1,10 @@
-package dsk.otus.softwarearchitect.task10.payment;
+package dsk.otus.softwarearchitect.task10.order;
 
 import org.postgresql.ds.PGSimpleDataSource;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Lazy;
-import org.springframework.context.annotation.PropertySource;
 import org.springframework.data.jdbc.core.convert.JdbcConverter;
 import org.springframework.data.jdbc.core.convert.JdbcCustomConversions;
 import org.springframework.data.jdbc.core.convert.RelationResolver;
@@ -20,7 +19,7 @@ import org.springframework.transaction.PlatformTransactionManager;
 import javax.sql.DataSource;
 
 @Configuration
-public class Task10JdbcConfiguration extends AbstractJdbcConfiguration {
+public class Task10OrderJdbcConfiguration extends AbstractJdbcConfiguration {
     private static String POSTGRES_URI = "POSTGRES_URI";
     private static String POSTGRES_USER = "POSTGRES_USER";
     private static String POSTGRES_PASSWORD = "POSTGRES_PASSWORD";

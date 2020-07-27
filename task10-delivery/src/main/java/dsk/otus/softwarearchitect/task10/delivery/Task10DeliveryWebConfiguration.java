@@ -12,7 +12,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 import java.util.List;
 
 @Configuration
-public class Task10WebConfiguration extends WebMvcConfigurerAdapter {
+public class Task10DeliveryWebConfiguration extends WebMvcConfigurerAdapter {
     // закоментировать если нужны внутренние настройки конвертации, работало для JSON
     @Override
     public void configureMessageConverters(List<HttpMessageConverter<?>> converters) {

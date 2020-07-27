@@ -1,4 +1,4 @@
-package dsk.otus.softwarearchitect.task10.order;
+package dsk.otus.softwarearchitect.task10.payment;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.converter.ByteArrayHttpMessageConverter;
@@ -12,7 +12,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 import java.util.List;
 
 @Configuration
-public class Task10WebConfiguration extends WebMvcConfigurerAdapter {
+public class Task10PaymentWebConfiguration extends WebMvcConfigurerAdapter {
     // закоментировать если нужны внутренние настройки конвертации, работало для JSON
     @Override
     public void configureMessageConverters(List<HttpMessageConverter<?>> converters) {

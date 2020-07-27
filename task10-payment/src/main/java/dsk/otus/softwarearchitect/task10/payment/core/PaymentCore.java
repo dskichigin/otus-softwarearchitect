@@ -30,6 +30,9 @@ public class PaymentCore {
         paymentRepository.save(payment);
         return payment;
     }
+    public void cancelPaymentByOrderId(String orderId) {
+        paymentRepository.cancelOperationByOrderId(orderId);
+    }
     public PaymentEntity findById(String id) throws Exception {
         Optional optPayment = paymentRepository.findById(id);
         if (!optPayment.isPresent()) throw new Exception("Не найден платеж по идентификатору.");

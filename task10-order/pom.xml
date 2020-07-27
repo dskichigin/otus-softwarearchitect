@@ -67,7 +67,7 @@
                         <manifest>
                             <addClasspath>true</addClasspath>
                             <classpathPrefix>test10_lib/</classpathPrefix>
-                            <mainClass>dsk.otus.softwarearchitect.task10.order.Task10Application</mainClass>
+                            <mainClass>dsk.otus.softwarearchitect.task10.order.Task10OrderApplication</mainClass>
                         </manifest>
                         <manifestEntries>
                             <Version>${project.version}</Version>

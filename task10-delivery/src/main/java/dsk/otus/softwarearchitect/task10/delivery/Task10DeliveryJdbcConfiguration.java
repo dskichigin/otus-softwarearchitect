@@ -1,4 +1,4 @@
-package dsk.otus.softwarearchitect.task10.order;
+package dsk.otus.softwarearchitect.task10.delivery;
 
 import org.postgresql.ds.PGSimpleDataSource;
 import org.springframework.beans.factory.annotation.Value;
@@ -19,7 +19,7 @@ import org.springframework.transaction.PlatformTransactionManager;
 import javax.sql.DataSource;
 
 @Configuration
-public class Task10JdbcConfiguration extends AbstractJdbcConfiguration {
+public class Task10DeliveryJdbcConfiguration extends AbstractJdbcConfiguration {
     private static String POSTGRES_URI = "POSTGRES_URI";
     private static String POSTGRES_USER = "POSTGRES_USER";
     private static String POSTGRES_PASSWORD = "POSTGRES_PASSWORD";

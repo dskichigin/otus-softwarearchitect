@@ -4,6 +4,6 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class Task10Application {
-	public static void main(String[] args) { SpringApplication.run(Task10Application.class, args); }
+public class Task10PaymentApplication {
+	public static void main(String[] args) { SpringApplication.run(Task10PaymentApplication.class, args); }
 }

@@ -13,5 +13,5 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 @PropertySource("file:jdbc.properties")
 //@EnablePrometheusMetrics
 //@EnablePrometheusScraping
-public class Task10Configuration {
+public class Task10PaymentConfiguration {
 }

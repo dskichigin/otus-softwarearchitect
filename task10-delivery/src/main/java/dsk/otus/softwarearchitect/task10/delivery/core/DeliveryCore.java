@@ -20,7 +20,7 @@ public class DeliveryCore {
             SlotEntity slot = new SlotEntity();
             slot.setId(java.util.UUID.randomUUID().toString());
             slot.setTimeFrom(String.valueOf(f)+":00");
-            slot.setTimeFrom(String.valueOf(f+1)+":00");
+            slot.setTimeTo(String.valueOf(f+1)+":00");
             slot.setNew(true);
             slotRepository.save(slot);
         }
@@ -30,7 +30,7 @@ public class DeliveryCore {
         if (!optional.isPresent()) return null;
         return (SlotEntity) optional.get();
     }
-    public void setDeliverySlot(String orderId, String timeFrom, String timeTo) throws Exception {
+    public SlotEntity setDeliverySlot(String orderId, String timeFrom, String timeTo) throws Exception {
         SlotEntity slot = slotRepository.findSlotByTime(timeFrom, timeTo);
         if (slot == null) throw new Exception("Временной слот не найден");
         if (slot.getOrderId() != null)
@@ -39,6 +39,7 @@ public class DeliveryCore {
         slot.setNew(false);
         slot.setOrderId(orderId);
         slotRepository.save(slot);
+        return slot;
     }
     public void cancelDelivery(String orderId) {
         slotRepository.cancelSlotByOrderId(orderId);

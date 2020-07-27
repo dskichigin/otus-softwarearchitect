@@ -48,7 +48,7 @@ public class DeliveryController {
 
     @GetMapping(value = "/delivery/slots", produces = "application/json")
     @Counted
-    public ResponseEntity<List<SlotEntity>> getSlotByOrder(@PathParam("orderid") String id, HttpServletRequest request) {
+    public ResponseEntity<List<SlotEntity>> getSlotByOrder(@RequestParam("order_id") String id, HttpServletRequest request) {
         return ResponseEntity.ok(slotRepository.findByOrderId(id));
     }
 
@@ -81,14 +81,13 @@ public class DeliveryController {
      * @return
      * @throws Exception
      */
-    @PutMapping(path="/delivery/slots", consumes = "application/json", produces = "application/json")
+    @PostMapping(path="/delivery", produces = "application/json")
     @Counted
-    public @ResponseBody ResponseEntity setDeliverySlot(@PathParam("order_id") String id,
-                                                        @PathParam("time_from") String timeFrom,
-                                                        @PathParam("time_to") String timeTo,
+    public @ResponseBody ResponseEntity<SlotEntity> setDeliverySlot(@RequestParam("order_id") String id,
+                                                        @RequestParam("time_from") String timeFrom,
+                                                        @RequestParam("time_to") String timeTo,
                                                         HttpServletRequest request) throws Exception {
-        deliveryCore.setDeliverySlot(id, timeFrom, timeTo);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok(deliveryCore.setDeliverySlot(id, timeFrom, timeTo));
     }
     /**
      * отмена операции
@@ -97,9 +96,9 @@ public class DeliveryController {
      * @return
      * @throws Exception
      */
-    @PutMapping(path="/delivery/cancel", consumes = "application/json", produces = "application/json")
+    @PutMapping(path="/delivery/cancel", produces = "application/json")
     @Counted
-    public @ResponseBody ResponseEntity cancelDelivery(@PathParam("order_id") String orderId, HttpServletRequest request) throws Exception {
+    public @ResponseBody ResponseEntity cancelDelivery(@RequestParam("order_id") String orderId, HttpServletRequest request) throws Exception {
         deliveryCore.cancelDelivery(orderId);
         return ResponseEntity.ok().build();
     }

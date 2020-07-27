@@ -1,5 +1,6 @@
 package dsk.otus.softwarearchitect.task10.order.core;
 
+import dsk.otus.softwarearchitect.task10.delivery.entity.SlotEntity;
 import dsk.otus.softwarearchitect.task10.order.entity.OrderEntity;
 import dsk.otus.softwarearchitect.task10.order.object.StatusOrder;
 import dsk.otus.softwarearchitect.task10.order.repository.OrderRepository;
@@ -29,7 +30,7 @@ public class OrderCore {
 
     RestTemplate restTemplate = new RestTemplate();
 
-    public void createOrder(OrderEntity order) {
+    public OrderEntity createOrder(OrderEntity order) {
         order.setNew(true);
         order.setStatus(StatusOrder.IN_WORK.name());
         orderRepository.save(order);
@@ -59,14 +60,17 @@ public class OrderCore {
                 cancelPayment(order);
                 throw e;
             }
+            order.setNew(false);
+            order.setStatus(StatusOrder.COMPLETE.name());
+            orderRepository.save(order);
 
         } catch (Exception e) {
-            throw e;
-        } finally {
             order.setNew(false);
             order.setStatus(StatusOrder.CANCELED.name());
             orderRepository.save(order);
+            throw e;
         }
+        return order;
     }
 
     private PaymentEntity createPayment(OrderEntity order) {
@@ -90,7 +94,7 @@ public class OrderCore {
     }
     private void cancelPayment(OrderEntity order) {
         try {
-            String url = "http://"+server_payment+"/products/cancel";
+            String url = "http://"+server_payment+"/payments/cancel";
             UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(url)
                     .queryParam("order_id", order.getId());
 
@@ -116,7 +120,7 @@ public class OrderCore {
         operation.setCol(order.getCol());
 
         try {
-            String url = "http://"+server_warehouse+"/warehouses";
+            String url = "http://"+server_warehouse+"/warehouses/reserve";
 
             HttpHeaders headers = new HttpHeaders();
             HttpEntity<OperationEntity> request = new HttpEntity<>(operation, headers);
@@ -147,7 +151,7 @@ public class OrderCore {
     private void createDelivery(OrderEntity order) {
 
         try {
-            String url = "http://"+server_delivery+"/delivery/slots";
+            String url = "http://"+server_delivery+"/delivery";
 
             UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(url)
                     .queryParam("order_id", order.getId())
@@ -157,8 +161,8 @@ public class OrderCore {
             HttpHeaders headers = new HttpHeaders();
             HttpEntity request = new HttpEntity(headers);
 
-            restTemplate.put(builder.toUriString(), request);
-//            ResponseEntity data = restTemplate.exchange(builder.toString(), HttpMethod.PUT, request, (Class<Object>) null);
+//            restTemplate.put(builder.toUriString(), request);
+            ResponseEntity<SlotEntity> data = restTemplate.exchange(builder.toUriString(), HttpMethod.POST, request, SlotEntity.class);
         } catch (Exception e) {
             throw e;
         }

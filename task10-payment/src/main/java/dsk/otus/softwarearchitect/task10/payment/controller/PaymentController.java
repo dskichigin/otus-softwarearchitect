@@ -7,14 +7,11 @@ import dsk.otus.softwarearchitect.task10.payment.repository.PaymentRepository;
 import io.micrometer.core.annotation.Counted;
 import io.micrometer.core.annotation.Timed;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.websocket.server.PathParam;
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @Timed(percentiles = {0.5, 0.95, 0.99, 1}, histogram = true)
@@ -43,7 +40,7 @@ public class PaymentController {
 
     @GetMapping(value = "/payments", produces = "application/json")
     @Counted
-    public ResponseEntity<List<PaymentEntity>> getPaymentsByOrder(@PathParam("orderid") String id, HttpServletRequest request) {
+    public ResponseEntity<List<PaymentEntity>> getPaymentsByOrder(@RequestParam("order_id") String id, HttpServletRequest request) {
         return ResponseEntity.ok(paymentRepository.findByOrderId(id));
     }
 
@@ -54,10 +51,11 @@ public class PaymentController {
      * @return
      * @throws Exception
      */
-    @PutMapping(path="/payments/cancel", consumes = "application/json", produces = "application/json")
+    @PutMapping(path="/payments/cancel", produces = "application/json")
     @Counted
-    public @ResponseBody ResponseEntity<PaymentEntity> cancelProduct(@PathParam("order_id") String orderId, HttpServletRequest request) throws Exception {
-        return ResponseEntity.ok(paymentCore.cancelPayment(orderId));
+    public @ResponseBody ResponseEntity cancelProduct(@RequestParam("order_id") String orderId, HttpServletRequest request) throws Exception {
+        paymentCore.cancelPaymentByOrderId(orderId);
+        return ResponseEntity.ok().build();
     }
 
     @GetMapping(path = "/version", produces = "application/json")
