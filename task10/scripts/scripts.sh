@@ -14,3 +14,5 @@ helm install warehouseservice warehouseservice/.
 
 helm dependency update orderservice/.
 helm install orderservice orderservice/.
+
+skaffold deploy
