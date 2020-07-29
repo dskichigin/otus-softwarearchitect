@@ -1,0 +1,6 @@
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: standart
+provisioner: kubernetes.io/pvc-protection
+volumeBindingMode: WaitForFirstConsumer

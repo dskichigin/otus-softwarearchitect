@@ -1,0 +1,50 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: deliveryservice
+spec:
+  template:
+    metadata:
+      name: deliveryservice
+    spec:
+      restartPolicy: Never
+      containers:
+        - name: post-install-job
+          image: postgres:latest
+          env:
+            - name: PGHOST
+              valueFrom:
+                configMapKeyRef:
+                  name: deliveryservice-config
+                  key: POSTGRES_HOST
+            - name: PGPORT
+              valueFrom:
+                configMapKeyRef:
+                  name: deliveryservice-config
+                  key: POSTGRES_PORT
+            - name: PGUSER
+              valueFrom:
+                secretKeyRef:
+                  name: deliveryservice-secret
+                  key: POSTGRES_USER
+            - name: PGPASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: deliveryservice-secret
+                  key: POSTGRES_PASSWORD
+          command:
+            - sh
+            - "-c"
+            - |
+              psql <<'EOF'
+              CREATE TABLE slots
+              (
+                id character(36) NOT NULL,
+                orderid character(36),
+                time_from character(5),
+                time_to character(5),
+                CONSTRAINT pk_slots PRIMARY KEY (id)
+              );
+              EOF
+
+  backoffLimit: 10

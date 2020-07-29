@@ -1,0 +1,52 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: warehouseservice
+spec:
+  template:
+    metadata:
+      name: warehouseservice
+    spec:
+      restartPolicy: Never
+      containers:
+        - name: post-install-job
+          image: postgres:latest
+          env:
+            - name: PGHOST
+              valueFrom:
+                configMapKeyRef:
+                  name: warehouseservice-config
+                  key: POSTGRES_HOST
+            - name: PGPORT
+              valueFrom:
+                configMapKeyRef:
+                  name: warehouseservice-config
+                  key: POSTGRES_PORT
+            - name: PGUSER
+              valueFrom:
+                secretKeyRef:
+                  name: warehouseservice-secret
+                  key: POSTGRES_USER
+            - name: PGPASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: warehouseservice-secret
+                  key: POSTGRES_PASSWORD
+          command:
+            - sh
+            - "-c"
+            - |
+              psql <<'EOF'
+              CREATE TABLE warehouses
+              (
+                id character(36) NOT NULL,
+                orderid character(36),
+                productid character(36),
+                col numeric,
+                type character varying(50),
+                active integer,
+                CONSTRAINT pk_warehouses PRIMARY KEY (id)
+              )
+              EOF
+
+  backoffLimit: 10
