@@ -24,8 +24,15 @@ public class OrderController {
     @PostMapping(path = "/orders", produces = "application/json")
     @Counted
     public @ResponseBody
-    ResponseEntity<OrderEntity> createOrder(@RequestBody OrderEntity order) throws Exception {
+    ResponseEntity<OrderEntity> createOrder(@RequestBody OrderEntity order) {
         return ResponseEntity.ok(orderCore.createOrder(order));
+    }
+
+    @GetMapping(path = "/orders/count", produces = "application/json")
+    @Counted
+    public @ResponseBody
+    ResponseEntity<Long> countOrders() {
+        return ResponseEntity.ok(orderRepository.getCountOrders());
     }
 
     @GetMapping(path = "/version", produces = "application/json")

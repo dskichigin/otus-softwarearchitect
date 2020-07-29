@@ -16,6 +16,8 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import java.util.Optional;
+
 @Component
 public class OrderCore {
     @Autowired
@@ -28,6 +30,10 @@ public class OrderCore {
     RestTemplate restTemplate = new RestTemplate();
 
     public OrderEntity createOrder(OrderEntity order) {
+        // проверяем наличие ордела с указанным GUID в случаии повторных запросов
+        Optional<OrderEntity> opt = orderRepository.findById(order.getId());
+        if (opt.isPresent()) return opt.get();
+
         order.setNew(true);
         order.setStatus(StatusOrder.IN_WORK.name());
         orderRepository.save(order);

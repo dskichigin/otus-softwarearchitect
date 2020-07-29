@@ -1,0 +1,289 @@
+{
+	"info": {
+		"_postman_id": "bd5c9f47-2149-4d6e-a40b-8ad23816877f",
+		"name": "Idempotent method",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "оприходование товара",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "0a827985-eca6-4f7c-8528-3a4ac25ebff3",
+						"exec": [
+							"var responseJSON = JSON.parse(responseBody)",
+							"pm.collectionVariables.set(\"productId\", responseJSON[\"productId\"])"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"orderId\":\"\",\n \"productId\":\"{{$randomUUID}}\",\n \"col\":2}\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://{{baseUrl}}/warehouses/arrival",
+					"protocol": "http",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"warehouses",
+						"arrival"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "инициализируем временные слоты",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "a692b828-48fd-4aba-9b74-e008e0dac5b8",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://{{baseUrl}}/delivery/slots/init",
+					"protocol": "http",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"delivery",
+						"slots",
+						"init"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "оформить заказ",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "e445a979-1cda-457b-9d29-189a0c90696a",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "c9d067cf-27e7-4142-8eed-80ed5284d31f",
+						"exec": [
+							"uuid = require('uuid');",
+							"pm.collectionVariables.set(\"orderId\", uuid.v4());",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"id\":\"{{orderId}}\",\n \"productId\":\"{{productId}}\",\n \"deliveryTimeFrom\":\"10:00\",\n \"deliveryTimeTo\":\"11:00\",\n \"col\":1,\n \"summa\":100}\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://{{baseUrl}}/orders",
+					"protocol": "http",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"orders"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "количество заказов",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://{{baseUrl}}/orders/count",
+					"protocol": "http",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"orders",
+						"count"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "повторная отправка заказа",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "25afb264-5f33-4104-85f6-ee6fa487e2e7",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "e5162991-0f15-4c18-a6f4-cb08a8dd7cf4",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"id\":\"{{orderId}}\",\n \"productId\":\"{{productId}}\",\n \"deliveryTimeFrom\":\"10:00\",\n \"deliveryTimeTo\":\"11:00\",\n \"col\":1,\n \"summa\":100}\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://{{baseUrl}}/orders",
+					"protocol": "http",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"orders"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "количество заказов",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://{{baseUrl}}/orders/count",
+					"protocol": "http",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"orders",
+						"count"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "aec0f4bb-4752-4917-bcce-017f5372cc33",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "8298b911-9ede-4a81-b490-2d3993cd8daa",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"id": "cc12910f-9f14-424d-99f0-d930621ce355",
+			"key": "baseUrl_warehouse",
+			"value": "127.0.0.1:8002"
+		},
+		{
+			"id": "b54dc756-0b9c-4596-824b-9b2e01a59955",
+			"key": "baseUrl_delivery",
+			"value": "127.0.0.1:8003"
+		},
+		{
+			"id": "20a8f238-a130-4ee4-917d-6d9374727f7c",
+			"key": "baseUrl_order",
+			"value": "127.0.0.1:8000"
+		},
+		{
+			"id": "8137d9db-7190-4f97-af7c-125f84d054a8",
+			"key": "productId",
+			"value": ""
+		},
+		{
+			"id": "50fc5231-5812-4367-90fa-9191af4b5c64",
+			"key": "orderId",
+			"value": ""
+		},
+		{
+			"id": "e25def42-f21c-4128-b813-b889e0ff4a26",
+			"key": "baseUrl_payment",
+			"value": "127.0.0.1:8001"
+		},
+		{
+			"id": "36cb8e8a-0d3b-45ea-9888-7b210d383a9d",
+			"key": "baseUrl",
+			"value": "arch.homework/otusapp"
+		}
+	],
+	"protocolProfileBehavior": {}
+}

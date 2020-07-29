@@ -1,0 +1,16 @@
+apiVersion: skaffold/v2beta2
+kind: Config
+build:
+  tagPolicy:
+    sha256: {}
+deploy:
+  helm:
+    releases:
+    - name: paymentservice
+      chartPath: paymentservice/.
+    - name: warehouseservice
+      chartPath: warehouseservice/.
+    - name: deliveryservice
+      chartPath: deliveryservice/.
+    - name: orderservice
+      chartPath: orderservice/.
